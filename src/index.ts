@@ -80,14 +80,45 @@ async function sel() {
   //   .setFirefoxService(serviceBuilder)
   //   .build();
   try {
-    await driver.get("http://www.google.com/ncr");
-    await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
-    await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
+    await driver.get(
+      "https://www.tistory.com/auth/login?redirectUrl=https://www.tistory.com/"
+    );
+    // await driver.findElement(By.name("password")).sendKeys("webdriver", Key.RETURN);
+    // await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
+
+    await driver.findElement(By.name("loginId")).sendKeys(process.env.ID);
+    await driver.sleep(500);
+    await driver
+      .findElement(By.name("password"))
+      .sendKeys(process.env.PASS, Key.RETURN);
+    await driver.wait(until.titleIs("TISTORY"), 1000);
+    const title = await driver.getTitle();
+    // console.log(title);
+    await driver.sleep(1000);
+    const menu = driver.findElement(
+      By.xpath(`//*[@id="kakaoHead"]/div/div[3]/div/a[2]`)
+    );
+
+    (await menu).click();
+    await driver.sleep(1000);
+
+    const writeMenu = driver.findElement(
+      By.xpath(
+        `//*[@id="kakaoHead"]/div/div[3]/div/div/div/div[2]/div/div[1]/a[2]`
+      )
+    );
+    (await writeMenu).click();
   } catch (e) {
     console.log(e);
   } finally {
-    await driver.quit();
+    // await driver.quit();
   }
 }
 
 sel();
+
+async function sleep(miliseconds: number) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), miliseconds);
+  });
+}
