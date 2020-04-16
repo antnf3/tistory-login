@@ -1,7 +1,12 @@
+import "chromedriver";
 import axios from "axios";
 import "dotenv/config";
 import request from "request";
 import cheerio from "cheerio";
+
+import { Builder, By, Key, until, WebDriver } from "selenium-webdriver";
+import { ServiceBuilder } from "selenium-webdriver/chrome";
+import path from "path";
 
 function login() {
   const URL = "https://tistory.com/auth/login";
@@ -63,4 +68,26 @@ function login2() {
     }
   });
 }
-login2();
+// login2();
+
+async function sel() {
+  const driver = await new Builder().forBrowser("chrome").build();
+
+  // const chromedriver = path.join(__dirname, "chromedriver");
+  // const serviceBuilder = new ServiceBuilder(chromedriver);
+  // const driver = await new Builder()
+  //   .forBrowser("chrome")
+  //   .setFirefoxService(serviceBuilder)
+  //   .build();
+  try {
+    await driver.get("http://www.google.com/ncr");
+    await driver.findElement(By.name("q")).sendKeys("webdriver", Key.RETURN);
+    await driver.wait(until.titleIs("webdriver - Google Search"), 1000);
+  } catch (e) {
+    console.log(e);
+  } finally {
+    await driver.quit();
+  }
+}
+
+sel();
