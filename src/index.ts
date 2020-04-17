@@ -112,9 +112,9 @@ async function sel() {
 
     await driver.wait(until.titleIs("새로운 글쓰기"), 1000);
 
-    const writeMode = driver.findElement(By.xpath(`//*[@id="mceu_18-open"]`));
-    (await writeMode).click();
-    await driver.sleep(500);
+    // const writeMode = driver.findElement(By.xpath(`//*[@id="mceu_18-open"]`));
+    // (await writeMode).click();
+    // await driver.sleep(500);
 
     // html mode
     // const htmlMode = driver.findElement(By.xpath(`//*[@id="mceu_32"]`));
@@ -134,6 +134,20 @@ async function sel() {
     // blogContext.sendKeys("테스트 입니다.");
 
     // 기본모드
+    const blogTitle = driver.findElement(
+      By.xpath(`//*[@id="editorContainer"]/div[2]/textarea`)
+    );
+    blogTitle.sendKeys("테스트", Key.TAB);
+
+    driver.
+    const blogContext = driver.findElement(
+      By.xpath(`//*[@id="tiny-react_61681809521587098897232_ifr"]`)
+    );
+    driver.sleep(1000);
+    const blogContext2 = driver.findElement(By.xpath(`//*[@id="tinymce"]`));
+    await driver.wait(until.elementIsVisible(blogContext2), 1000);
+    driver.sleep(1000);
+    blogContext2.sendKeys("테스트 입니다.");
   } catch (e) {
     console.log(e);
   } finally {
