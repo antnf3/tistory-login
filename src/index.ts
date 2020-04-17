@@ -100,6 +100,7 @@ async function sel() {
     );
 
     (await menu).click();
+
     await driver.sleep(1000);
 
     const writeMenu = driver.findElement(
@@ -108,6 +109,31 @@ async function sel() {
       )
     );
     (await writeMenu).click();
+
+    await driver.wait(until.titleIs("새로운 글쓰기"), 1000);
+
+    const writeMode = driver.findElement(By.xpath(`//*[@id="mceu_18-open"]`));
+    (await writeMode).click();
+    await driver.sleep(500);
+
+    // html mode
+    // const htmlMode = driver.findElement(By.xpath(`//*[@id="mceu_32"]`));
+    // (await htmlMode).click();
+
+    // await driver.sleep(500);
+    // const blogTitle = driver.findElement(
+    //   By.xpath(`//*[@id="editorContainer"]/div[1]/div[2]/textarea`)
+    // );
+    // const blogContext = driver.findElement(
+    //   By.xpath(
+    //     `//*[@id="editorContainer"]/div[1]/div[4]/div/div/div[6]/div[1]/div/div/div/div[5]/div/pre`
+    //   )
+    // );
+    // blogTitle.sendKeys("테스트");
+    // await driver.sleep(1000);
+    // blogContext.sendKeys("테스트 입니다.");
+
+    // 기본모드
   } catch (e) {
     console.log(e);
   } finally {
