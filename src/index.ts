@@ -134,20 +134,37 @@ async function sel() {
     // blogContext.sendKeys("테스트 입니다.");
 
     // 기본모드
-    const blogTitle = driver.findElement(
+    const blogTitle = await driver.findElement(
       By.xpath(`//*[@id="editorContainer"]/div[2]/textarea`)
     );
-    blogTitle.sendKeys("테스트", Key.TAB);
+    blogTitle.sendKeys("테스트");
 
-    driver.
-    const blogContext = driver.findElement(
-      By.xpath(`//*[@id="tiny-react_61681809521587098897232_ifr"]`)
+    await driver.sleep(500);
+
+    await driver.switchTo().frame(0);
+
+    const blogContent = await driver.findElement(By.id(`tinymce`));
+    blogContent.sendKeys("테스트내용");
+    await driver.sleep(500);
+    await driver.switchTo().defaultContent();
+    // driver.switchTo().parentFrame();
+
+    const saveBtn = await driver.findElement(
+      By.xpath(`//*[@id="kakaoWrap"]/div[3]/div[2]/button`)
     );
-    driver.sleep(1000);
-    const blogContext2 = driver.findElement(By.xpath(`//*[@id="tinymce"]`));
-    await driver.wait(until.elementIsVisible(blogContext2), 1000);
-    driver.sleep(1000);
-    blogContext2.sendKeys("테스트 입니다.");
+    await saveBtn.click();
+
+    await driver.sleep(1000);
+    await driver.switchTo().frame(1);
+
+    const robot = await driver.findElement(
+      By.xpath(`//*[@id="recaptcha-anchor"]/div[1]`)
+    );
+    robot.click();
+    await driver.sleep(500);
+    await driver.switchTo().defaultContent();
+
+    // `//*[@id="editor-root"]/div[6]/div/div/div/form/fieldset/div[3]/div/button[2]`;
   } catch (e) {
     console.log(e);
   } finally {
